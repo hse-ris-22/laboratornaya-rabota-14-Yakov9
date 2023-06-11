@@ -8,6 +8,10 @@ namespace lab
 {
     internal class Program
     {
+        /// <summary>
+        /// рандомайзер для объектов из 10 лабораторной
+        /// </summary>
+        /// <returns></returns>
         public static Person RandomizePerson()
         {
             Random rnd = new Random();
@@ -30,11 +34,17 @@ namespace lab
                     return new Person();
             }
         }
+
+        /// <summary>
+        /// зполнение коллекции случайными элементами
+        /// </summary>
+        /// <param name="coll"></param>
+        /// <returns></returns>
         public static Stack<Dictionary<int, Person>> CollectionRandomInitPerson(Stack<Dictionary<int, Person>> coll)
         {
             int collectionSize = coll.Count();
             Stack<Dictionary<int, Person>> newStack = new Stack<Dictionary<int, Person>>(collectionSize);
-            Person p1 = new Person("Василий", "Мужской", 100);
+            Person p1 = new Person("Василий", "Мужской", 100); //для задания с пересечением
             for (int i = 0; i < collectionSize; i++)
             {
                 Dictionary<int, Person> dict = coll.Pop();
@@ -56,12 +66,20 @@ namespace lab
             return newStack;
         }
 
+        /// <summary>
+        /// вывод коллекций IEnumerable
+        /// </summary>
+        /// <param name="coll"></param>
         public static void PrintCollection(IEnumerable<KeyValuePair<int, Person>> coll)
         {
             foreach (KeyValuePair<int, Person> p in coll)
                 Console.WriteLine(p.Key + ": " + p.Value);
         }
 
+        /// <summary>
+        /// вывод изначальной коллекции
+        /// </summary>
+        /// <param name="coll"></param>
         public static void PrintInitialCollection(Stack<Dictionary<int, Person>> coll)
         {
             if (coll.Count <= 0)
@@ -79,6 +97,10 @@ namespace lab
             }
         }
 
+        /// <summary>
+        /// очистка консоли + вывод коллекции
+        /// </summary>
+        /// <param name="coll"></param>
         static void ClearAll(Stack<Dictionary<int, Person>> coll)
         {
             Console.WriteLine("\nНажмите клавишу Enter для просмотра следующих запросов");
@@ -89,6 +111,11 @@ namespace lab
                 PrintInitialCollection(coll);
             }
         }
+
+        /// <summary>
+        /// Поиск всех мужчин (выборка с помощью LINQ)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void SearchMalesLINQ(Stack<Dictionary<int, Person>> coll)
         {
             var males = from item in coll
@@ -98,6 +125,10 @@ namespace lab
             PrintCollection(males);
         }
 
+        /// <summary>
+        /// Поиск всех мужчин (выборка с помощью метода расширения)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void SearchMalesExtensionMethod(Stack<Dictionary<int, Person>> coll)
         {
             var males = coll.SelectMany(x => x).
@@ -105,6 +136,10 @@ namespace lab
             PrintCollection(males);
         }
 
+        /// <summary>
+        /// Подсчет всех студентов, чей возраст больше 20 (счетчик с помощью LINQ)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void CountStudentsAgeAboveTwentyLINQ(Stack<Dictionary<int, Person>> coll)
         {
             int countS = (from item in coll
@@ -115,6 +150,10 @@ namespace lab
             Console.WriteLine(countS);
         }
 
+        /// <summary>
+        /// Подсчет всех студентов, чей возраст больше 20 (счетчик c помощью метода расширения)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void CountStudentsAgeAboveTwentyExtensionMethod(Stack<Dictionary<int, Person>> coll)
         {
             int countS = (coll.SelectMany(x => x).
@@ -122,6 +161,11 @@ namespace lab
             Console.WriteLine(countS);
         }
 
+        /// <summary>
+        /// Поиск пересечений 1 и 2 группы (Операция над множествами с помощью LINQ)
+        /// </summary>
+        /// <param name="dict1"></param>
+        /// <param name="dict2"></param>
         public static void InterSectPeopleGroup12LINQ(Dictionary<int, Person> dict1, Dictionary<int, Person> dict2)
         {
             var people = from item in dict1.Intersect(dict2)
@@ -129,6 +173,11 @@ namespace lab
             PrintCollection(people);             
         }
 
+        /// <summary>
+        /// Поиск пересечений 1 и 2 группы (Операция над множествами с помощью метода расширения)
+        /// </summary>
+        /// <param name="dict1"></param>
+        /// <param name="dict2"></param>
         public static void InterSectPeopleGroup12ExtensionMethod(Dictionary<int, Person> dict1, Dictionary<int, Person> dict2)
         {
             var people = dict1.Select(x => x)
@@ -136,6 +185,11 @@ namespace lab
             PrintCollection(people);
         }
 
+
+        /// <summary>
+        /// поиск максимального возраста учеников в коллекции (Агрегирование данных с помощью LINQ)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void MaxAgeOfPupilsLINQ(Stack<Dictionary<int, Person>> coll)
         {
             int maxAge = (from item in coll
@@ -145,6 +199,10 @@ namespace lab
             Console.WriteLine(maxAge);
         }
 
+        /// <summary>
+        /// поиск максимального возраста учеников в коллекции (Агрегирование данных с помощью метода расширения)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void MaxAgeOfPupilsExtensionMethod(Stack<Dictionary<int, Person>> coll)
         {
             int maxAge = coll.SelectMany(x => x).
@@ -152,6 +210,10 @@ namespace lab
             Console.WriteLine(maxAge);
         }
 
+        /// <summary>
+        /// Разбиение по группам студентов по полу (Группировака данных с помощью LINQ)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void MakeGroupsByAgeLINQ(Stack<Dictionary<int, Person>> coll)
         {
             var people = from item in coll
@@ -168,6 +230,10 @@ namespace lab
             }
         }
 
+        /// <summary>
+        /// Разбиение по группам студентов по полу (Группировака данных с помощью метода расширения)
+        /// </summary>
+        /// <param name="coll"></param>
         public static void MakeGroupsByAgeExtensionMethod(Stack<Dictionary<int, Person>> coll)
         {
             var people = coll.SelectMany(x => x).
@@ -185,6 +251,7 @@ namespace lab
 
         static void Main(string[] args)
         {
+            //создание коллекции
             Stack<Dictionary<int, Person>> coll = new Stack<Dictionary<int, Person>>(3);
             Dictionary<int, Person> dict1 = new Dictionary<int, Person>(5);
             Dictionary<int, Person> dict2 = new Dictionary<int, Person>(5);
@@ -195,34 +262,38 @@ namespace lab
             coll = CollectionRandomInitPerson(coll);
             PrintInitialCollection(coll);
 
-            
-            Console.WriteLine("\nПоиск всех мужчин (выборка с помощью LINQ)");
+            //выборка
+            Console.WriteLine("\nПоиск всех мужчин (выборка с помощью LINQ)"); //LINQ
             SearchMalesLINQ(coll);
-            Console.WriteLine("\nПоиск всех мужчин (выборка с помощью метода расширения)");
+            Console.WriteLine("\nПоиск всех мужчин (выборка с помощью метода расширения)"); //метод расширения
             SearchMalesExtensionMethod(coll);
             ClearAll(coll);
 
-            Console.WriteLine("\nПодсчет всех студентов, чей возраст больше 20 (счетчик с помощью LINQ)");
+            //подсчет
+            Console.WriteLine("\nПодсчет всех студентов, чей возраст больше 20 (счетчик с помощью LINQ)"); //LINQ
             CountStudentsAgeAboveTwentyLINQ(coll);
-            Console.WriteLine("\nПодсчет всех студентов, чей возраст больше 20 (счетчик c помощью метода расширения)");
+            Console.WriteLine("\nПодсчет всех студентов, чей возраст больше 20 (счетчик c помощью метода расширения)"); //метод расширения
             CountStudentsAgeAboveTwentyExtensionMethod(coll);
             ClearAll(coll);
 
-            Console.WriteLine("\nПоиск пересечений 1 и 2 группы (Операция над множетсвами с помощью LINQ)");
+            //поиск пересечений
+            Console.WriteLine("\nПоиск пересечений 1 и 2 группы (Операция над множествами с помощью LINQ)"); //LINQ
             InterSectPeopleGroup12LINQ(dict1, dict2);
-            Console.WriteLine("\nПоиск пересечений 1 и 2 группы (Операция над множетсвами с помощью метода расширения)");
+            Console.WriteLine("\nПоиск пересечений 1 и 2 группы (Операция над множествами с помощью метода расширения)");//метод расширения
             InterSectPeopleGroup12ExtensionMethod(dict1, dict2);
             ClearAll(coll);
 
-            Console.WriteLine("\nМаксимальный возраст учеников в коллекции (Операция над множетсвами с помощью LINQ)");
+            //агрегирование
+            Console.WriteLine("\nМаксимальный возраст учеников в коллекции (Агрегирование данных с помощью LINQ)"); //LINQ
             MaxAgeOfPupilsLINQ(coll);
-            Console.WriteLine("\nМаксимальный возраст учеников в коллекции (Операция над множетсвами с помощью метода расширения)");
+            Console.WriteLine("\nМаксимальный возраст учеников в коллекции (Агрегирование данных с помощью метода расширения)"); //метод расширения
             MaxAgeOfPupilsExtensionMethod(coll);
             ClearAll(coll);
 
-            Console.WriteLine("\nРазбиение по группам студентов (Операция над множетсвами с помощью LINQ)");
+            //группировка
+            Console.WriteLine("\nРазбиение по группам студентов по полу (Группировака данных с помощью LINQ)"); //LINQ
             MakeGroupsByAgeLINQ(coll);
-            Console.WriteLine("\nРазбиение по группам студентов (Операция над множетсвами с помощью метода расширения)");
+            Console.WriteLine("\nРазбиение по группам студентов по полу (Группировака данных с помощью метода расширения)");//метод расширения
             MakeGroupsByAgeExtensionMethod(coll);
         }
     }
